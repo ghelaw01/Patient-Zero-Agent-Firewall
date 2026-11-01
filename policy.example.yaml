@@ -1,0 +1,39 @@
+# Patient Zero policy for the Acme Corp demo.
+# Copy this file and change it for your own tools.
+
+egress:
+  # Data may be sent to these domains (and their subdomains) without extra checks.
+  allowed_domains: [acme.com]
+
+injection:
+  action: quarantine     # quarantine | block | flag
+  spotlight: true        # wrap untrusted output in <untrusted> markers
+
+# Tools not listed below use these settings: treat their output as untrusted.
+default:
+  trust: untrusted
+
+deny_tools: []
+
+tools:
+  # Sources of untrusted content: anyone can write an email or a web page.
+  list_emails:     {trust: untrusted}
+  read_email:      {trust: untrusted}
+  search_docs:     {trust: untrusted}
+  fetch_url:       {trust: untrusted}
+
+  # Trusted, sensitive internal data.
+  lookup_employee: {trust: trusted, sensitive: true}
+  run_sql:
+    trust: trusted
+    sensitive: true
+    sink: internal
+    approval: on_risk
+    deny_patterns:
+      - '\b(drop|truncate|alter)\s+(table|database)\b'
+      - '\bdelete\s+from\b'
+      - '\bupdate\s+\w+\s+set\b'
+
+  # Sinks: tools that send data somewhere. Their output is not trusted either.
+  send_email:      {sink: external, approval: on_risk, destination_args: [to]}
+  http_post:       {sink: external, approval: on_risk, destination_args: [url]}
