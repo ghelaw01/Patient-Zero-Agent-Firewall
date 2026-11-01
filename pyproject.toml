@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "patient-zero"
+version = "0.1.0"
+description = "Stop one poisoned document from hijacking your whole AI agent team: a taint-tracking security gateway for multi-agent systems and MCP tools."
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "Zemen Ghelaw"}]
+requires-python = ">=3.10"
+dependencies = ["mcp>=2", "pyyaml>=6", "openai>=1", "anthropic>=0.40"]
+keywords = ["ai-agents", "mcp", "prompt-injection", "llm-security", "multi-agent", "ai-governance"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-asyncio>=0.23"]
+
+[project.scripts]
+pz = "patientzero.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

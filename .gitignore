@@ -1,0 +1,13 @@
+.env
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+*.jsonl.tmp
+patient-zero-audit.jsonl
+bench/final_run.log
+.DS_Store
