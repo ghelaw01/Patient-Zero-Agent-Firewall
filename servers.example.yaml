@@ -1,0 +1,10 @@
+# Upstream MCP servers that Patient Zero protects (used by `pz serve`).
+# Each one is started as a subprocess and talked to over stdio.
+servers:
+  filesystem:
+    command: npx
+    args: ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/allowed/folder"]
+  # github:
+  #   command: npx
+  #   args: ["-y", "@modelcontextprotocol/server-github"]
+  #   env: {GITHUB_PERSONAL_ACCESS_TOKEN: "..."}
